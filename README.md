@@ -1,2 +1,1 @@
-# Test
-Testing purposes
+# News Summarization
