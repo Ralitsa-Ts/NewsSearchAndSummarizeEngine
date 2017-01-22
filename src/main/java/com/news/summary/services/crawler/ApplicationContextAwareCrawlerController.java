@@ -139,6 +139,12 @@ public class ApplicationContextAwareCrawlerController extends CrawlController im
 		}
 	}
 
+    @Override
+    public void setApplicationContext(ApplicationContext arg0)
+                    throws BeansException {
+        this.applicationContext = arg0;
+    }
+
 	private <T extends WebCrawler> void startCrawlerThreads(final Class<T> _c,
 					final int numberOfCrawlers, final List<Thread> threads,
 					final List<T> crawlers) {
@@ -153,11 +159,5 @@ public class ApplicationContextAwareCrawlerController extends CrawlController im
 			threads.add(thread);
 			LOGGER.info("Crawler " + i + " started.");
 		}
-	}
-
-	@Override
-	public void setApplicationContext(ApplicationContext arg0)
-					throws BeansException {
-		this.applicationContext = arg0;
 	}
 }

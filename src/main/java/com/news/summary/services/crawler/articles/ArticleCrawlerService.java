@@ -3,15 +3,18 @@ package com.news.summary.services.crawler.articles;
 
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
+import org.jsoup.Jsoup;
 import org.jsoup.helper.Validate;
+import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.news.summary.models.Article;
-import com.news.summary.repositories.ArticlesRepository;
-import com.news.summary.utils.ArticleParser;
+import com.news.summary.utils.ArticleDocumentParserUtil;
+import com.news.summary.utils.ArticleProcessingExecutor;
+import com.news.summary.utils.BaseDocumentParserUtil;
 
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
@@ -28,10 +31,7 @@ public class ArticleCrawlerService extends WebCrawler {
 					.getLogger(ArticleCrawlerService.class);
 
 	@Autowired
-	private ArticleParser newsParser;
-
-	@Autowired
-	private ArticlesRepository articlesRepository;
+    private ArticleProcessingExecutor articleProcessingExecutor;
 
 	/**
 	 * Specifies if the new url should be crawled or not. Here the crawler
@@ -66,10 +66,18 @@ public class ArticleCrawlerService extends WebCrawler {
 
 		if (page.getParseData() instanceof HtmlParseData) {
 			HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
-			Article article = newsParser.parseDocument(htmlParseData.getHtml(), url);
-			if (article != null) {
-				articlesRepository.save(article);
-			}
+            Document document = Jsoup.parse(htmlParseData.getHtml(), url);
+            String documentType = BaseDocumentParserUtil.retrievePageType(document);
+            if (StringUtils.isNotBlank(documentType) && documentType
+                            .equals(ArticleDocumentParserUtil.getArticlePageType())) {
+                LOGGER.info("Retrieved new document of type article. URL is {}.", url);
+                articleProcessingExecutor.processArticle(document);
+            } else {
+                if (StringUtils.isBlank(documentType)) {
+                    documentType = "unknown";
+                }
+                LOGGER.debug("Retrieved document is of type {}.", documentType);
+            }
 		}
 	}
 }

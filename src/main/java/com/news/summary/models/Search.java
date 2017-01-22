@@ -7,47 +7,47 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 
 @Entity
-@Table(name = "articles")
-public class Article {
+@Table(name = "searches")
+public class Search {
 
-	@Id
+    @Id
     private String id;
-
-	private String url;
 
     @Type(type = "text")
     private String keywords;
 
-    public Article() {
+    private String status;
+
+    public Search() {
     }
 
-    public Article(String id, String url, String keywords) {
+    public Search(String id, String keywords, String status) {
         this.id = id;
         this.keywords = keywords;
-		this.url = url;
-	}
+        this.status = status;
+    }
 
     public String getId() {
-		return id;
-	}
+        return id;
+    }
 
     public void setId(String id) {
-		this.id = id;
-	}
+        this.id = id;
+    }
 
     public String getKeywords() {
         return keywords;
-	}
+    }
 
     public void setKeywords(String keywords) {
         this.keywords = keywords;
-	} 
+    }
 
-	public String getUrl() {
-		return url;
-	} 
+    public String getStatus() {
+        return status;
+    }
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
