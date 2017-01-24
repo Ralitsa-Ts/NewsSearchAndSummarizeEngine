@@ -17,7 +17,7 @@ public class ArticleController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ArticleController.class);
 
     @Autowired
-    private ArticleControllerHelper articleManager;
+    private ArticleControllerHelper articleControllerHelper;
 
     @Autowired
     private SearchesClient searchesClient;
@@ -32,9 +32,9 @@ public class ArticleController {
                             .isEmpty()) {
                 return "There is already a search in progress. Thy again when it finishes";
             }
-            search = articleManager.createSearch(searchText);
+            search = articleControllerHelper.createSearch(searchText);
             LOGGER.info("Initiated new search for '{}'.", searchText);
-            String summarizedText = articleManager.findSummarizedArticle(search);
+            String summarizedText = articleControllerHelper.findSummarizedArticle(search);
             LOGGER.info("Retrieval of summarized article successfully completed.");
             search.setStatus(SearchStatus.COMPLETED.toString());
             searchesClient.update(search);

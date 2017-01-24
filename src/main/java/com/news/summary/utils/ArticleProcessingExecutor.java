@@ -11,8 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.uuid.Generators;
+import com.news.summary.client.repository.ArticlesClient;
+import com.news.summary.client.repository.SearchesClient;
 import com.news.summary.models.Article;
-import com.news.summary.repositories.ArticlesRepository;
 
 @Component
 public class ArticleProcessingExecutor {
@@ -21,7 +22,10 @@ public class ArticleProcessingExecutor {
     private static final Logger LOGGER = LoggerFactory.getLogger(ArticleProcessingExecutor.class);
 
     @Autowired
-    private ArticlesRepository articlesRepository;
+    private ArticlesClient articlesClient;
+
+    @Autowired
+    private SearchesClient searchesClient;
 
     public void processArticle(Document document) {
         LOGGER.info("Processing article with URL {}.", document.location());
@@ -36,7 +40,8 @@ public class ArticleProcessingExecutor {
         Article article = new Article(Generators.timeBasedGenerator().generate().toString(),
                         document.location(), StringUtils.join(keywords, SPACE_DELIMETER));
         if (article != null) {
-            articlesRepository.save(article);
+            articlesClient.saveArticleBySearchId(article,
+                            searchesClient.getCurrentSearch().getId());
         }
     }
 }

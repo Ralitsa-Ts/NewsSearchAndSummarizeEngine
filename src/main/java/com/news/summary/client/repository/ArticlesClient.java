@@ -1,10 +1,14 @@
 package com.news.summary.client.repository;
 
+import java.util.List;
+
 import com.news.summary.models.Article;
 
 public interface ArticlesClient {
 
-    void save(Article article);
+    void saveArticleBySearchId(Article article, String searchId);
 
-    void update(Article article);
+    List<Article> getArticlesBySearchId(String searchId);
+
+    List<Article> getArticlesByUrl(String url);
 }

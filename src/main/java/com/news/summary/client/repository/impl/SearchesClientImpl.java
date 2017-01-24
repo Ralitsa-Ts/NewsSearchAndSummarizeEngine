@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.news.summary.client.repository.SearchesClient;
 import com.news.summary.models.Search;
+import com.news.summary.models.SearchStatus;
 import com.news.summary.repositories.SearchesRepository;
 
 @Component
@@ -37,5 +38,17 @@ public class SearchesClientImpl implements SearchesClient {
             }
         }
         return searchesByStatus;
+    }
+
+    @Override
+    public synchronized Search getCurrentSearch() {
+        List<Search> searches = getSearchesByStatus(SearchStatus.IN_PROGRESS.toString());
+        if (!searches.isEmpty()) {
+            /**
+             * We are assuming that only one search in progress is allowed.
+             */
+            return searches.get(0);
+        }
+        return null;
     }
 }

@@ -11,4 +11,6 @@ public interface SearchesClient {
     void update(Search search);
 
     List<Search> getSearchesByStatus(String status);
+
+    Search getCurrentSearch();
 }

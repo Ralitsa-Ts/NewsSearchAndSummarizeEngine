@@ -16,13 +16,38 @@ public class ArticleDocumentParserUtil extends BaseDocumentParserUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ArticleDocumentParserUtil.class);
 
-    public static String retrieveArticleStoryIntroduction(Document doc) {
+    /**
+     * TODO: This method is never used. It should be removed.
+     */
+    private static String retrieveArticleSection(Document doc) {
+        Element articleSection = doc.getElementsByAttributeValue(PROPERTY_ATTRIBUTE,
+                        PROPERTY_ATTRIBUTE_ARTICLE_SECTION_VALUE).first();
+        return articleSection != null ? articleSection.text() : null;
+    }
+
+    public static String retrieveArticleContent(Document doc) {
+        String title = retrieveTitle(doc);
+        String articleStoryIntroduction = retrieveArticleStoryIntroduction(doc);
+        String articleMainStory = retrieveArticleMainStory(doc);
+        String articleContent = title.concat(articleStoryIntroduction).concat(articleMainStory);
+        return articleContent;
+    }
+
+    public static boolean isArticle(Document doc) {
+        return retrievePageType(doc).equals(ARTICLE_PAGE_TYPE);
+    }
+
+    public static String getArticlePageType() {
+        return ARTICLE_PAGE_TYPE;
+    }
+
+    static String retrieveArticleStoryIntroduction(Document doc) {
         Element storyIntroduction = doc.getElementsByClass(
                         ELEMENT_CLASS_STORY_BODY_INTRODUCTION).first();
         return storyIntroduction != null ? storyIntroduction.text() : null;
     }
 
-    public static String retrieveArticleMainStory(Document doc) {
+    static String retrieveArticleMainStory(Document doc) {
         Element articleStoryBody = doc.getElementsByAttributeValue(PROPERTY_ATTRIBUTE,
                         PROPERTY_ATTRIBUTE_ARTICLE_BODY_VALUE).first();
         if (articleStoryBody != null) {
@@ -38,19 +63,5 @@ public class ArticleDocumentParserUtil extends BaseDocumentParserUtil {
         }
         LOGGER.debug("No article main story was found.");
         return null;
-    }
-
-    public static String retrieveArticleSection(Document doc) {
-        Element articleSection = doc.getElementsByAttributeValue(PROPERTY_ATTRIBUTE,
-                        PROPERTY_ATTRIBUTE_ARTICLE_SECTION_VALUE).first();
-        return articleSection != null ? articleSection.text() : null;
-    }
-
-    public static boolean isArticle(Document doc) {
-        return retrievePageType(doc).equals(ARTICLE_PAGE_TYPE);
-    }
-
-    public static String getArticlePageType() {
-        return ARTICLE_PAGE_TYPE;
     }
 }
