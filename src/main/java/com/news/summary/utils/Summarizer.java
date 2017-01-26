@@ -35,7 +35,7 @@ public class Summarizer {
 	//Text into paragraphs
 		public static String[] splitToParagraphs(String content)
 		{
-	    	String[] mystring = content.split("\n\r\n");
+	    	String[] mystring = content.split("\n");
 			
 			return mystring;
 		}
