@@ -108,7 +108,7 @@ public class Summarizer {
 		public static String getBestsentenceFromParagraph(String paragraph)
 		{
 			String[] sentences = splitToSentences(formatSentence(paragraph));
-			if(sentences == null || sentences.length <= 2)
+			if(sentences == null)
 				return "";
 			
 			float[][] intersectionMatrix = getSentenceIntersectionMatrix(sentences);
