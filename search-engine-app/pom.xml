@@ -5,8 +5,6 @@
 	<artifactId>search-engine-app</artifactId>
 	<packaging>jar</packaging>
 
-	<name>news-summary-service</name>
-
 	<parent>
 		<groupId>com.information.retrieval</groupId>
 		<artifactId>information-retrieval</artifactId>
