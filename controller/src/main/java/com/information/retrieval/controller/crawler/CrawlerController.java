@@ -16,7 +16,6 @@ import com.information.retrieval.crawler.Crawler;
 public class CrawlerController {
 
     private static final String BBC_NEWS_URL = "http://www.bbc.com/news";
-    private static final int CRAWLER_TIMEOUT_MINUTES = 1;
     private static final int NUMBER_OF_CRAWLER_THREADS = 7;
     private static final Logger LOGGER = LoggerFactory.getLogger(CrawlerController.class);
     
@@ -28,11 +27,12 @@ public class CrawlerController {
     @ResponseBody
     public void startCrawler() {
         try {
-            crawler.crawl(Arrays.asList(BBC_NEWS_URL), CRAWLER_TIMEOUT_MINUTES,
-                            NUMBER_OF_CRAWLER_THREADS);
+        	LOGGER.info("Initiating crawling session.");
+            crawler.crawl(Arrays.asList(BBC_NEWS_URL), NUMBER_OF_CRAWLER_THREADS);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            String errorMessage = "Failed to start crawler.";
+            LOGGER.error(errorMessage);
+            throw new InternalError(errorMessage, e);
         }
     }
 }

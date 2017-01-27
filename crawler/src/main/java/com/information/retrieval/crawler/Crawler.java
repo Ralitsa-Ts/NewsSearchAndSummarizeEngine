@@ -16,7 +16,7 @@ public class Crawler {
     @Autowired
 	private ApplicationContextAwareCrawlerController articleCrawler;
 
-    public void crawl(List<String> seeds, int timeoutMinutes, int numberOfCrawlerThreads)
+    public void crawl(List<String> seeds, int numberOfCrawlerThreads)
                     throws Exception {
 
 		for (String seed : seeds) {
