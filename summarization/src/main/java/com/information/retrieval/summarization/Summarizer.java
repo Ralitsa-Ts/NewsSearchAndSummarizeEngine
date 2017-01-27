@@ -20,10 +20,20 @@ public class Summarizer {
 
 	//Text into paragraphs
 	public static String[] splitToParagraphs(String content)
-	{
-		String[] mystring = content.split("\n");
-
-		return mystring;
+	{   String[] mystring = content.split("(?i)(?<=[.?!])\\S+(?=[a-z])");
+		int len = mystring.length;
+		String[] result = new String[len/4];
+		String paragraph = "";
+		
+		for(int i=0, j=0; i<len; i++) {
+			if(i%4 == 0 && i != 0){
+				result[j]=paragraph;
+				j++;
+				paragraph = "";
+			}
+			paragraph = paragraph.concat(mystring[i]).concat(".");
+		}
+		return result;
 	}
 
 	public static <T> Collection <T> intersect (Collection <? extends T> a, Collection <? extends T> b)
@@ -92,7 +102,9 @@ public class Summarizer {
 	}
 
 	public static String getBestsentenceFromParagraph(String paragraph)
-	{
+	{	
+		if(paragraph == null)
+			return "";
 		String[] sentences = splitToSentences(formatSentence(paragraph));
 		if(sentences == null)
 			return "";
@@ -207,34 +219,4 @@ public class Summarizer {
 
 		return summary;
 	}
-	//	    Original main function	
-	//      TODO: remove after summarize function is functional
-	//		public static void main(String[] args) 
-	//		{
-	//			String title = "this is a title";
-	//			String content = "";
-	//			
-	//			Instance = new Summarizer();
-	//			
-	//			 try {
-	//				 
-	//				 content = new Scanner(new File(args[0])).useDelimiter("\\Z").next();
-	//				
-	//			 }
-	//			 catch (FileNotFoundException e) {
-	//			        e.printStackTrace();
-	//			    }		 
-	//			
-	//			String[] paragraphs = splitToParagraphs(content);
-	//			StringBuilder summary = new StringBuilder();
-	//			
-	//			for(String p : paragraphs)
-	//			{
-	//				String bestSent = getBestsentenceFromParagraph(p);
-	//				if(bestSent != null && bestSent.length() > 0)
-	//					summary.append(bestSent);
-	//			}
-	//			
-	//			System.out.println(summary);
-	//		}
 }
