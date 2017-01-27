@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.information.retrieval.indexer.Indexer;
+import com.information.retrieval.indexer.util.ArticleDocumentParserUtil;
 
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
@@ -20,13 +21,13 @@ import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
 
 @Component
-public class ArticleCrawlerService extends WebCrawler {
+public class CrawlerService extends WebCrawler {
 
 	private static final Pattern FILTERS = Pattern.compile(".*(\\.(css|js|gif|jpg"
 					+ "|png|mp3|mp3|zip|gz))$");
     private static final String HTTP_URL_BEGGINING = "http://www.bbc.com/";
 	private static final Logger LOGGER = LoggerFactory
-					.getLogger(ArticleCrawlerService.class);
+					.getLogger(CrawlerService.class);
 
 	@Autowired
     private Indexer indexer;
@@ -34,7 +35,7 @@ public class ArticleCrawlerService extends WebCrawler {
 	/**
 	 * Specifies if the new url should be crawled or not. Here the crawler
 	 * ignores urls that have css, js, git and start with something else except
-	 * 'http://'
+	 * 'http://www.bbc.com/'
 	 * 
 	 * @param referringPage
 	 *            page in which the new url was discovered, cannot be null.
@@ -66,7 +67,10 @@ public class ArticleCrawlerService extends WebCrawler {
 			HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
             Document document = Jsoup.parse(htmlParseData.getHtml(), url);
             try {
-                indexer.addDoc(document);
+            	if (ArticleDocumentParserUtil.isArticle(document)) {
+            		LOGGER.info("Found an article.");
+            		indexer.addDoc(document);
+            	}
             } catch (IOException e) {
                 LOGGER.error("Failed to add document with url {}.", document.location());
             }

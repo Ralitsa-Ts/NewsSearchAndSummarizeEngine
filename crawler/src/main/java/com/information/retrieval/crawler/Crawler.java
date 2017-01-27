@@ -24,6 +24,6 @@ public class Crawler {
 			articleCrawler.addSeed(seed);
 		}
         LOGGER.info("Starting crawler with {} crawler threads", numberOfCrawlerThreads);
-        articleCrawler.start(ArticleCrawlerService.class, numberOfCrawlerThreads);
+        articleCrawler.start(CrawlerService.class, numberOfCrawlerThreads);
 	}
 }

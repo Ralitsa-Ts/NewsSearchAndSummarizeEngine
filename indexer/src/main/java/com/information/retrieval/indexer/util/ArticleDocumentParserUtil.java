@@ -27,7 +27,11 @@ public class ArticleDocumentParserUtil extends BaseDocumentParserUtil {
     }
 
     public static boolean isArticle(Document doc) {
-        return retrievePageType(doc).equals(ARTICLE_PAGE_TYPE);
+    	String pageType = retrievePageType(doc);
+    	if (StringUtils.isBlank(pageType)) {
+    		return false;
+    	}
+        return pageType.equals(ARTICLE_PAGE_TYPE);
     }
 
     public static String getArticlePageType() {
