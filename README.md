@@ -7,7 +7,12 @@ to find the one that best matches a search, to summarize it and to return it.
 What will you need?
 
 1. Java 1.8
-2. Maven
+2. Maven 3.3.9
+
+How to start the app?
+mvn clean install
+java -jar search-engine-app/target/search-engine-app-0.0.1-SNAPSHOT.jar
+
 
 Libraries used:
 
@@ -72,7 +77,11 @@ For text summarization
 Какво е необходимо за стартирането на приложението?
 
 1. Java 1.8
-2. Maven
+2. Maven 3.3.9
+
+Как да стартирам приложението?
+mvn clean install
+java -jar search-engine-app/target/search-engine-app-0.0.1-SNAPSHOT.jar
 
 Използвани библиотеки:
 
