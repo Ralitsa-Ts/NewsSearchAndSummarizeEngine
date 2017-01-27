@@ -42,22 +42,16 @@ For indexing
 <version>6.4.0</version>
 
 ------------------------------------------------
-
-------------------------------------------------
 For logging
 <groupId>org.slf4j</groupId>
 <artifactId>slf4j-api</artifactId>
 <version>1.7.21</version>
 
 ------------------------------------------------
-
-------------------------------------------------
 For creating a Spring Boot application
 <groupId>org.springframework.boot</groupId>
 <artifactId>spring-boot-starter-web</artifactId>
 <version>1.3.5.RELEASE</version>
-
-------------------------------------------------
 
 ------------------------------------------------
 For text summarization
@@ -114,14 +108,10 @@ For text summarization
 <version>6.4.0</version>
 
 ------------------------------------------------
-
-------------------------------------------------
 За логове
 <groupId>org.slf4j</groupId>
 <artifactId>slf4j-api</artifactId>
 <version>1.7.21</version>
-
-------------------------------------------------
 
 ------------------------------------------------
 За създаване на Spring Boot приложение
@@ -130,11 +120,7 @@ For text summarization
 <version>1.3.5.RELEASE</version>
 
 ------------------------------------------------
-
-------------------------------------------------
 За резюмиране на текст
 <groupId>org.apache.opennlp</groupId>
 <artifactId>opennlp-tools</artifactId>
 <version>1.7.1</version>
-
-------------------------------------------------
